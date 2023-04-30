@@ -1,0 +1,38 @@
+services:
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=$COUCHDB_USER
+      - COUCHDB_PASSWORD=$COUCHDB_PASSWORD
+    volumes:
+        - ./dbdata:/opt/couchdb/data
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+     - "80:80"
+     - "443:443"
+    volumes:
+      - type: volume
+        source: nginx
+        target: /nginx
+  nodejs:
+    image: node:latest
+    container_name: nodejs
+    restart: unless-stopped
+    env_file: .env
+    ports:
+     - "8080:8080"
+    volumes:
+      - type: volume
+        source: node
+        target: /node
+volumes:
+  nginx:
+  node:

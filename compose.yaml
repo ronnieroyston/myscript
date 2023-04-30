@@ -1,0 +1,8 @@
+services:
+  node:
+    build: .
+    command: npm run start
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    
